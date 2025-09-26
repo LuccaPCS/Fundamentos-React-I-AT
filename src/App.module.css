@@ -1,0 +1,34 @@
+.app {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.appBody {
+  width: 100%;
+  max-width: 1000px;
+  flex-grow: 1;
+  margin: 0 auto;
+}
+
+header,
+footer {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: salmon;
+}
+
+main {
+  flex-grow: 1;
+  padding: 1rem;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.usersGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+}
