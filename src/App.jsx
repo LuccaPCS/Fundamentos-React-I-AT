@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { PostsList } from "./components/FetchData.jsx";
-import { UsersList } from "./components/FetchData.jsx";
+import { UsersList, PostsList, CommentsList } from "./components/FetchData.jsx";
 import style from "./App.module.css";
 
 function App() {
   const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   function renderUsers() {
     return (
@@ -20,11 +20,31 @@ function App() {
   function renderPosts() {
     return (
       <>
-        <h2 style={{ marginBottom: "1rem" }}>Posts by {selectedUser.name}</h2>
-        <PostsList userId={selectedUser.id} />
-        <button onClick={() => setSelectedUser(null)}>← Back to users</button>
+        <h2 style={{ marginBottom: "1rem" }}>
+          Posts by: <strong>{selectedUser.name}</strong>
+        </h2>
+        <PostsList userId={selectedUser.id} onSelectPost={setSelectedPost} />
+        <button onClick={() => setSelectedUser(null)}>Back to users</button>
       </>
     );
+  }
+
+  function renderComments() {
+    return (
+      <>
+        <h2 style={{ marginBottom: "1rem" }}>
+          Comments on: <strong>{selectedPost.title}</strong>
+        </h2>
+        <CommentsList postId={selectedPost.id} />
+        <button onClick={() => setSelectedPost(null)}>Back to posts</button>
+      </>
+    );
+  }
+
+  function renderMain() {
+    if (!selectedUser) return renderUsers();
+    if (selectedUser && !selectedPost) return renderPosts();
+    if (selectedUser && selectedPost) return renderComments();
   }
 
   return (
@@ -38,7 +58,7 @@ function App() {
               <li>Contact</li>
             </ul>
           </header>
-          <main>{selectedUser ? renderPosts() : renderUsers()}</main>
+          <main>{renderMain()}</main>
           <footer>Made with React. Built with Vite.</footer>
         </div>
       </div>

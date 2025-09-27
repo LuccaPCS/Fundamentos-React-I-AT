@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import User from "./User.jsx";
 import Post from "./Post.jsx";
+import Comment from "./Comment.jsx";
 
 /* USERS */
 export function UsersList({ onSelectUser }) {
@@ -43,7 +44,7 @@ export function UsersList({ onSelectUser }) {
 }
 
 /* POSTS */
-export function PostsList({ userId }) {
+export function PostsList({ userId, onSelectPost }) {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
 
@@ -76,7 +77,47 @@ export function PostsList({ userId }) {
   return (
     <>
       {posts.map((post) => (
-        <Post key={post.id} post={post} />
+        <Post key={post.id} post={post} onClick={() => onSelectPost(post)} />
+      ))}
+    </>
+  );
+}
+
+/* COMMENTS */
+export function CommentsList({ postId }) {
+  const [comments, setComments] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchComments() {
+      try {
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
+        );
+        if (!response.ok) {
+          throw new Error("Network response not ok");
+        }
+        const responseJson = await response.json();
+        setComments(responseJson);
+      } catch (error) {
+        setError(error);
+      }
+    }
+    fetchComments();
+  }, [postId]);
+
+  if (error) {
+    return <>Error: {error.message}</>;
+  }
+
+  if (comments.length === 0) {
+    return <>Loading...</>;
+  }
+
+  return (
+    <>
+      {comments.map((comment) => (
+        <Comment key={comment.id} comment={comment} />
       ))}
     </>
   );

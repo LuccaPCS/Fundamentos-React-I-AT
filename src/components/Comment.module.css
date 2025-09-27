@@ -1,0 +1,17 @@
+.commentCard {
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.commentTitle {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.commentBody {
+  margin: 0;
+  font-size: 0.875rem;
+}
