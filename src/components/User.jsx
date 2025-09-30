@@ -1,8 +1,13 @@
 import style from "./User.module.css";
 
-export default function User({ user, onClick }) {
+export default function User({ user, onClick, viewMode }) {
   return (
-    <div className={style.userCard} onClick={onClick}>
+    <div
+      className={`${style.userCard} ${
+        viewMode === "list" ? style.stretch : ""
+      }`}
+      onClick={onClick}
+    >
       <h3>{user.name}</h3>
       <p>
         <strong>Username: </strong>

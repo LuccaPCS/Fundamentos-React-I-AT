@@ -5,14 +5,13 @@ import style from "./App.module.css";
 function App() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [viewMode, setViewMode] = useState("grid");
 
   function renderUsers() {
     return (
       <>
         <h2>Users</h2>
-        <div className={style.usersGrid}>
-          <UsersList onSelectUser={setSelectedUser} />
-        </div>
+        <UsersList onSelectUser={setSelectedUser} viewMode={viewMode} />
       </>
     );
   }
@@ -57,6 +56,11 @@ function App() {
               <li>About</li>
               <li>Contact</li>
             </ul>
+            <button
+              onClick={() => setViewMode(viewMode === "grid" ? "list" : "grid")}
+            >
+              Switch to {viewMode === "grid" ? "List" : "Grid"} view
+            </button>
           </header>
           <main>{renderMain()}</main>
           <footer>Made with React. Built with Vite.</footer>

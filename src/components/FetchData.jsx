@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import style from "../App.module.css";
 import User from "./User.jsx";
 import Post from "./Post.jsx";
 import Comment from "./Comment.jsx";
 
 /* USERS */
-export function UsersList({ onSelectUser }) {
+export function UsersList({ onSelectUser, viewMode }) {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
 
@@ -35,11 +36,16 @@ export function UsersList({ onSelectUser }) {
   }
 
   return (
-    <>
+    <div className={viewMode === "grid" ? style.usersGrid : style.usersList}>
       {users.map((user) => (
-        <User key={user.id} user={user} onClick={() => onSelectUser(user)} />
+        <User
+          key={user.id}
+          user={user}
+          onClick={() => onSelectUser(user)}
+          viewMode={viewMode}
+        />
       ))}
-    </>
+    </div>
   );
 }
 
